@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF8">
+        <style>
+            body{width: inherit;}
+            table{width: 500px;height: 500px;margin-left: auto;margin-right: auto;border-collapse: collapse;}
+            td{border: 1px solid black;}
+            #div1{position: relative;margin-left: 47%;margin-right: 48%;}
+            .st{background-color: blue;}
+            .ss{background-color: violet;}
+            .bai{background-color: white;}
+            .apple{background-color: red;}
+        </style>
+        <script>
+              var apples=[];
+              var apples1=[];
+              var se=[];
+              var lu=[];
+              var xxx=null;
+              var gpci=0;
+              var code=39;
+              var ksz=true;
+              var ksz1=true;
+              var jc1=null;
+              var jc2=null;
+              var kg=false;
+              var ii=0;
+              //初始化
+              function csh(){
+               apples=[];
+               se=[];
+               lu=[];
+               xxx=null;
+               gpci=0;
+               ksz=true;
+               ksz1=true;
+               kg=true;
+               ii=0;
+               document.getElementById("0&0").className="ss";
+                document.getElementById("0&1").className="st";
+                se.push("0&0");
+               nweapple();
+              }
+            function nweapple(){
+                var idi=0;
+                var idd=0; 
+                do{
+                    idi=parseInt(Math.random()*50);
+                    idd=parseInt(Math.random()*50);
+                }while(document.getElementById(idi+"&"+idd).className=="ss"||document.getElementById(idi+"&"+idd).className=="st")
+                if(!kg){
+                    document.getElementById(idi+"&"+idd).className="apple";
+                    apples.push(idi+"&"+idd);
+                }
+                else{
+                    apples.push(apples1[ii]);
+                document.getElementById(apples1[ii++]).className="apple";
+              
+                }
+               //document.getElementById(0+"&"+30).className="apple";
+               
+            }
+            //跟屁虫
+            function gpc(id){
+                var t=se[gpci];
+                se[gpci]=id;
+                   document.getElementById(se[gpci]).className="ss";
+                   document.getElementById(t).className="bai";
+                   gpci++; 
+                if(gpci!=se.length)gpc(t);
+                xxx=se[se.length-1];
+                gpci=0;
+            }
+            //按键
+            function keydown(){
+                window.onkeydown=function(e){
+                  // console.log(e);
+                    if(ksz1)
+                    if(e.keyCode=="32"){
+                        if(ksz){
+                        ks();
+                        }
+                        else{
+                           ksz1=false; 
+                        clearInterval(jc1);
+                        }
+                        ksz=!ksz;   
+                    }
+                    if(!ksz1)
+                  if(e.keyCode=="13"){
+                        jl();
+                  }
+                    //不许回头
+                    if(!!e.type&&e.keyCode=="37"&&code=="39")return;
+                    if(!!e.type&&e.keyCode=="38"&&code=="40")return;
+                    if(!!e.type&&e.keyCode=="39"&&code=="37")return;
+                    if(!!e.type&&e.keyCode=="40"&&code=="38")return;
+                    //
+                  if(!!e.type&&(e.keyCode=="37"||e.keyCode=="38"||e.keyCode=="39"||e.keyCode=="40")){
+                      code=e.keyCode;
+                      lu.push(e.keyCode);
+                  }else if(e.keyCode=="37"||e.keyCode=="38"||e.keyCode=="39"||e.keyCode=="40"){
+                    lu.push(e.keyCode);
+                  }
+                  //右
+                  if(e.keyCode=="39"){
+                   var st=document.getElementsByClassName('st')[0];
+                   var id=st.id;
+                    var idi=parseInt(id.split("&")[0]);
+                    var idd=parseInt(id.split("&")[1]);
+                    var ids=idi+"&"+(idd+1);
+                    if(!!document.getElementById(ids)&&document.getElementById(ids).className!="ss")
+                    {    
+                         if(document.getElementById(ids).className=="apple"){  
+                        se.push(xxx);
+                        nweapple();
+                        }
+                        document.getElementById(ids).className="st";
+                        document.getElementById(id).className="bai";
+                        gpc(id);
+                    }else{
+                        document.getElementById('div2').innerHTML="游戏结束";
+                        confirm("游戏结束")? location.reload():document.getElementsByTagName('table')[0].style="display:none";
+                        clearInterval(jc1);
+                    }
+                  }
+                     //下
+                     if(e.keyCode=="40"){
+                   var st=document.getElementsByClassName('st')[0];
+                   var id=st.id;
+                    var idi=parseInt(id.split("&")[0]);
+                    var idd=parseInt(id.split("&")[1]);
+                    var ids=(idi+1)+"&"+idd;
+                    if(!!document.getElementById(ids)&&document.getElementById(ids).className!="ss")
+                    { 
+                        if(document.getElementById(ids).className=="apple"){  
+                        se.push(xxx);
+                        nweapple();
+                        }
+                        document.getElementById(ids).className="st";
+                        document.getElementById(id).className="bai";
+                        gpc(id);
+                    }else{
+                        document.getElementById('div2').innerHTML="游戏结束";
+                        confirm("游戏结束")? location.reload():document.getElementsByTagName('table')[0].style="display:none";
+                        clearInterval(jc1);
+                    }
+                  } 
+                     //左
+                     if(e.keyCode=="37"){
+                   var st=document.getElementsByClassName('st')[0];
+                   var id=st.id;
+                    var idi=parseInt(id.split("&")[0]);
+                    var idd=parseInt(id.split("&")[1]);
+                    var ids=idi+"&"+(idd-1);
+                    if(!!document.getElementById(ids)&&document.getElementById(ids).className!="ss")
+                    { 
+                        if(document.getElementById(ids).className=="apple"){  
+                        se.push(xxx);
+                        nweapple();
+                        }
+                        document.getElementById(ids).className="st";
+                        document.getElementById(id).className="bai";
+                        gpc(id);
+                    }else{
+                        document.getElementById('div2').innerHTML="游戏结束";
+                        confirm("游戏结束")? location.reload():document.getElementsByTagName('table')[0].style="display:none";
+                        clearInterval(jc1);
+                    }
+                  } 
+                     //上
+                     if(e.keyCode=="38"){
+                   var st=document.getElementsByClassName('st')[0];
+                   var id=st.id;
+                    var idi=parseInt(id.split("&")[0]);
+                    var idd=parseInt(id.split("&")[1]);
+                    var ids=(idi-1)+"&"+idd;
+                    if(!!document.getElementById(ids)&&document.getElementById(ids).className!="ss")
+                    { 
+                        if(document.getElementById(ids).className=="apple"){  
+                        se.push(xxx);
+                        nweapple();
+                        }
+                        document.getElementById(ids).className="st";
+                        document.getElementById(id).className="bai";
+                        gpc(id);
+
+                    }else{
+                        document.getElementById('div2').innerHTML="游戏结束";
+                        confirm("游戏结束")? location.reload():document.getElementsByTagName('table')[0].style="display:none";
+                        clearInterval(jc1);
+                    }
+                  }  
+                }
+
+            }
+            //开始
+            function ks(){
+                 jc1=setInterval(function(){
+                    onkeydown({"keyCode":code});
+                    },100);
+            }
+            //记录
+            function jl(){
+               
+               // alert(123);
+               var i=0;
+               var lu1=lu;
+                apples1=apples;
+                clearInterval(jc1);
+               while(document.getElementsByClassName('ss').length){
+                document.getElementsByClassName('ss')[0].className="bai";
+               }
+               while(document.getElementsByClassName('st').length){
+                document.getElementsByClassName('st')[0].className="bai";
+               }
+               while(document.getElementsByClassName('apple').length){
+                document.getElementsByClassName('apple')[0].className="bai";
+               }
+               csh();
+              
+                jc2=setInterval(function(){
+                    onkeydown({"keyCode":lu1[i++]});
+                    if(i==lu1.length){
+                        clearInterval(jc2);
+                        kg=false; 
+                    //    onkeydown({"keyCode":32});
+                        }
+                    },100);
+            }
+            window.onload=function(){
+                document.getElementById("0&0").className="ss";
+                document.getElementById("0&1").className="st";
+                se.push("0&0");
+                nweapple();
+                keydown();
+            }
+
+        </script>
+    </head>
+    <body>
+        <table></table>
+    <br/>
+    <hr/>
+    <!-- <div id="div1"><button onclick="jjll()">记录</button></div> -->
+    <div><h1  id='div2'>空格开始&nbsp;&nbsp;</h1></div>
+    </body>
+    <script>
+        var bc=50;
+        var table=document.getElementsByTagName('table')[0];
+        for(var i=0;i<bc;i++){
+            table.appendChild(document.createElement('tr'));
+        }
+        var tr=document.getElementsByTagName('tr');
+        for(var j=0;j<tr.length;j++){
+            for(var j1=0;j1<tr.length;j1++)
+            tr[j].appendChild(document.createElement('td'));
+        }
+        var td=document.getElementsByTagName('td');
+        for(var k=0;k<td.length;k++){
+            td[k].id=parseInt(k/bc)+"&"+k%bc;
+        }
+    </script>
+</html>
